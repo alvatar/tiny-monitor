@@ -15,7 +15,6 @@ class Status {
 	private {
 		time_t now;
 		time_t before;
-		time_t working;
 		tm* now_timeinfo;
 		tm* working_timeinfo;
 	}
@@ -25,6 +24,7 @@ class Status {
 		int w_sec;
 		int w_min;
 		int w_hour;
+		time_t working;
 	}
 
 	void restoreFromFile(in string file_name) {
@@ -51,9 +51,9 @@ class Status {
 		writeln("");
 
 		// We are in a new day if:
-		if ( ( (working_saved_ti.tm_hour > 2 && working_saved_ti.tm_hour < 8) // If was saved at night and slept 1 hour at least
-			   && comp >= 3600)
-			 || comp >= 36000 ) { // or enough time has passed (10h.)
+		if ( ((working_saved_ti.tm_hour > 2 && working_saved_ti.tm_hour < 8) // If was saved at night and slept 1 hour at least
+			   && (comp >= 3600))
+			 || (comp >= 36000) ) { // or enough time has passed (10h.)
 
 			if ( working_saved_ti.tm_hour > 6 ) {
 				now_timeinfo = localtime(&now);
@@ -105,12 +105,12 @@ class Status {
 		before = now;
 	}
 
-	void update() {
-		before = now;
-
-		now = time(null);
-
-		working += now - before;
+	void update(bool beenWorking) {
+		if (beenWorking) {
+			before = now;
+			now = time(null);
+			working += now - before;
+		}
 		working_timeinfo = localtime(&working);
 		w_sec = working_timeinfo.tm_sec;
 		w_min = working_timeinfo.tm_min;

@@ -29,7 +29,7 @@ int main() {
 	try {
 		status.saveToFile(save_file);
 	} catch {
-		writeln("El archivo " ~ save_file ~ "no pudo ser guardado, vuelva a pulsar <escape para salir>");
+		writeln("El archivo " ~ save_file ~ "no pudo ser guardado, vuelva a pulsar <escape> para salir");
 		ui.loop();
 	}
 

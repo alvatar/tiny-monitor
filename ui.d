@@ -15,10 +15,21 @@ private {
 interface Ui {
 	void init( Status
 			, void delegate()
-			, void delegate()
+			, void delegate(bool)
 			, void delegate() );
 	void finalize();
 	void loop();
+}
+
+private {
+	immutable key_escape = 27;
+	immutable key_space = 32;
+	immutable key_a = 97;
+	immutable key_z = 122;
+	immutable key_s = 115;
+	immutable key_x = 120;
+	immutable key_d = 100;
+	immutable key_c = 99;
 }
 
 /+ Possible way for keystrokes grabbing
@@ -55,7 +66,7 @@ class CursesUi : Ui {
 		WINDOW *my_win;
 
 		void delegate() startFunc;
-		void delegate() updateWork;
+		void delegate(bool) updateWork;
 		void delegate() stopFunc;
 
 		Status status;
@@ -64,7 +75,7 @@ class CursesUi : Ui {
 
 	void init( Status istatus
 			, void delegate() startf
-			, void delegate() updatef
+			, void delegate(bool) updatef
 			, void delegate() stopf ) {
 
 		status = istatus;
@@ -89,18 +100,36 @@ class CursesUi : Ui {
 	void loop() {
 		while (true) {
 			current_getch = getch();
-			if (current_getch == 27) {
+			if (current_getch == key_escape) {
 				break;
-			} else if (current_getch == 32 && working) {
+			} else if (current_getch == key_space && working) {
 				working = false;
 				stopFunc();
-			} else if (current_getch == 32 && !working) {
+			} else if (current_getch == key_space && !working) {
 				working = true;
 				startFunc();
+			} else if (current_getch == key_a) {
+				status.working += 3600;
+				updateWork(false);
+			} else if (current_getch == key_z) {
+				status.working -= 3600;
+				updateWork(false);
+			} else if (current_getch == key_s) {
+				status.working += 60;
+				updateWork(false);
+			} else if (current_getch == key_x) {
+				status.working -= 60;
+				updateWork(false);
+			} else if (current_getch == key_d) {
+				status.working += 1;
+				updateWork(false);
+			} else if (current_getch == key_c) {
+				status.working -= 1;
+				updateWork(false);
 			}
 			updateDisplay();
 			if (working) {
-				updateWork();
+				updateWork(true);
 			}
 			usleep(500000);
 		}
