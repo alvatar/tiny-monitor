@@ -50,7 +50,7 @@ class Status {
 				~ to!string(working_saved_ti.tm_sec) ~ "s. " );
 		writeln("");
 
-		// We are in a new day if:
+		// We are in a new working day if:
 		if ( ((working_saved_ti.tm_hour > 2 && working_saved_ti.tm_hour < 8) // If was saved at night and slept 1 hour at least
 			   && (comp >= 3600))
 			 || (comp >= 36000) ) { // or enough time has passed (10h.)

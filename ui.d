@@ -30,6 +30,7 @@ private {
 	immutable key_x = 120;
 	immutable key_d = 100;
 	immutable key_c = 99;
+	immutable key_r = 114;
 }
 
 /+ Possible way for keystrokes grabbing
@@ -100,32 +101,47 @@ class CursesUi : Ui {
 	void loop() {
 		while (true) {
 			current_getch = getch();
-			if (current_getch == key_escape) {
-				break;
-			} else if (current_getch == key_space && working) {
-				working = false;
-				stopFunc();
-			} else if (current_getch == key_space && !working) {
-				working = true;
-				startFunc();
-			} else if (current_getch == key_a) {
-				status.working += 3600;
-				updateWork(false);
-			} else if (current_getch == key_z) {
-				status.working -= 3600;
-				updateWork(false);
-			} else if (current_getch == key_s) {
-				status.working += 60;
-				updateWork(false);
-			} else if (current_getch == key_x) {
-				status.working -= 60;
-				updateWork(false);
-			} else if (current_getch == key_d) {
-				status.working += 1;
-				updateWork(false);
-			} else if (current_getch == key_c) {
-				status.working -= 1;
-				updateWork(false);
+			switch(current_getch) {
+				case(key_escape):
+					goto Lquit; // Don't you like gotos? Are you Dijkstra?
+				case(key_space):
+					if (working) {
+						working = false;
+						stopFunc();
+					} else {
+						working = true;
+						startFunc();
+					}
+					break;
+				case(key_a):
+					status.working += 3600;
+					updateWork(false);
+					break;
+				case(key_z):
+					status.working -= 3600;
+					updateWork(false);
+					break;
+				case(key_s):
+					status.working += 60;
+					updateWork(false);
+					break;
+				case(key_x):
+					status.working -= 60;
+					updateWork(false);
+					break;
+				case(key_d):
+					status.working += 1;
+					updateWork(false);
+					break;
+				case(key_c):
+					status.working -= 1;
+					updateWork(false);
+					break;
+				case(key_r):
+					status.working = 0;
+					updateWork(false);
+					break;
+				default: break;
 			}
 			updateDisplay();
 			if (working) {
@@ -133,6 +149,7 @@ class CursesUi : Ui {
 			}
 			usleep(500000);
 		}
+Lquit:
 		stopFunc();
 	}
 
