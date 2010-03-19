@@ -147,7 +147,7 @@ class CursesUi : Ui {
 			if (working) {
 				updateWork(true);
 			}
-			usleep(500000);
+			usleep(100000);
 		}
 Lquit:
 		stopFunc();
