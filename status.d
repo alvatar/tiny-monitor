@@ -59,9 +59,9 @@ class Status {
 			if ( working_saved_ti.tm_hour > 6 ) {
 				now_timeinfo = localtime(&now);
 				if ( now_timeinfo.tm_hour < 11 ) {
-					writeln("Parece que la última vez curraste suficiente, pero hoy vas, vienes tarde y la jodes");
-				} else {
 					writeln("Parece que la última vez curraste suficiente y vienes hoy prontito. Sigue así y mejora");
+				} else {
+					writeln("Parece que la última vez curraste suficiente, pero hoy vas, vienes tarde y la jodes");
 				}
 			} else {
 				now_timeinfo = localtime(&now);

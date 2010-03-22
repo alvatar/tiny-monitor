@@ -156,17 +156,17 @@ Lquit:
 	private void updateDisplay() {
 		curs_set(1);
 		mvwprintw(screen,1,1,"---------- SI MIRAS ESTO ES QUE NO ESTAS TRABAJANDO ----------");
-		mvwprintw(screen,3,1,"Pulsa <espacio> para parar el tiempo contabilizado");
-		mvwprintw(screen,4,1,"Pulsa <escape> para salir y dejar de monitorizarte");
+		/+ mvwprintw(screen,3,1,"Pulsa <espacio> para parar el tiempo contabilizado"); +/
+		/+ mvwprintw(screen,4,1,"Pulsa <escape> para salir y dejar de monitorizarte"); +/
 		if (working) {
-			mvwprintw(screen,7,6,"Tiempo total trabajando: (pulsa <espacio>)");
+			mvwprintw(screen,5,6,"Tiempo total trabajando: (pulsa <espacio>)");
 		} else {
-			mvwprintw(screen,7,6,"Tiempo total trabajando: %d h. %d m. %d s.           ", status.w_hour, status.w_min, status.w_sec);
+			mvwprintw(screen,5,6,"Tiempo total trabajando: %d h. %d m. %d s.           ", status.w_hour, status.w_min, status.w_sec);
 		}
 		if (working) {
-			mvwprintw(screen,10,1,"------------- En este momento estás trabajando -------------");
+			mvwprintw(screen,9,1,"------------- En este momento estás trabajando -------------");
 		} else {
-			mvwprintw(screen,10,1,"------------- En este momento NO ESTÁS TRABAJANDO -------------");
+			mvwprintw(screen,9,1,"------------- En este momento NO ESTÁS TRABAJANDO -------------");
 		}
 		wrefresh(screen);
 		refresh();
